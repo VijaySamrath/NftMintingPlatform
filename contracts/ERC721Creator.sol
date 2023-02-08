@@ -10,14 +10,6 @@ contract ERC721Creator is Ownable, ERC721, ERC721CreatorCore {
 
     constructor (string memory _name, string memory _symbol) ERC721(_name, _symbol) {
     }
-
-    //  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721CreatorCore) returns (bool) {
-    //     return ERC721CreatorCore.supportsInterface(interfaceId) || ERC721.supportsInterface(interfaceId);
-    // }
-
-    // function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal virtual  {
-    //     _approveTransfer(from, to, tokenId);
-    // }
    
     function registerExtension(address extension, string calldata baseURI) external override onlyOwner {
         requireNonBlacklist(extension);
@@ -53,7 +45,6 @@ contract ERC721Creator is Ownable, ERC721, ERC721CreatorCore {
         require(tokenIds.length == uris.length, "Invalid input");
         for (uint i; i < tokenIds.length;) {
             _setTokenURIExtension(tokenIds[i], uris[i]);
-            unchecked { ++i; }
         }
     }
 
@@ -75,7 +66,7 @@ contract ERC721Creator is Ownable, ERC721, ERC721CreatorCore {
     function mintBase(address to) public virtual override nonReentrant onlyOwner returns(uint256) {
         return _mintBase(to, "");
     }
-    
+
     //  {IERC721CreatorCore-mintBase}.
     
     function mintBase(address to, string calldata uri) public virtual override nonReentrant onlyOwner returns(uint256) {
